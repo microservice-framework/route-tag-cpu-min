@@ -1,0 +1,23 @@
+{
+  "name": "@microservice-framework/route-tag-cpu-min",
+  "version": "1.0.0",
+  "description": "Microservice-router 'cpu-min' tag handler.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cs": "eslint --fix index.js includes/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/microservice-framework/route-tag-cpu-min.git"
+  },
+  "author": "Gormartsen",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/microservice-framework/route-tag-cpu-min/issues"
+  },
+  "homepage": "https://github.com/microservice-framework/route-tag-cpu-min#readme",
+  "dependencies": {
+    "debug": "^2.2.0"
+  }
+}

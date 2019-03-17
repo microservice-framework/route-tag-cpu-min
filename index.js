@@ -7,35 +7,35 @@ const debug = {
 
 module.exports = {
   name: 'cpu-min',
-  handler: function(endpointTargets, config){
+  handler: function(taggedTargets, config, allTargets){
     debug.debug('processing cpu-min %O', config)
     let minCPUTarget = false
     let minCPUValue = 0
     let currentCPUValue = 0
-    for (let i in endpointTargets) {
-      if (!minCPU) {
-        minCPUTarget = endpointTargets[i]
-        if (minCPU.metrics) {
-          minCPUValue = endpointTargets[i].metrics.reduce(function(a, b) {
-            return parseFloat(a.cpu) + parseFloat(b.cpu)
-          });
+    let reduceFunction = function(a, b) {
+      let acpu = a.cpu
+      if (typeof acpu == "string") {
+        acpu = parseFloat(acpu)
+      }
+      let bcpu = b.cpu
+      if (typeof bcpu == "string") {
+        bcpu = parseFloat(bcpu)
+      }
+      return a + b
+    }
+
+    for (let i in taggedTargets) {
+      if (minCPUTarget === false) {
+        if (taggedTargets[i].metrics) {
+          minCPUValue = taggedTargets[i].metrics.reduce(reduceFunction);
+          minCPUTarget = taggedTargets[i]
         }
         continue
       }
-      if (endpointTargets[i].metrics) {
-        currentCPUValue = endpointTargets[i].metrics.reduce(function(a, b) {
-          let acpu = a.cpu
-          if (typeof acpu == "string") {
-            acpu = parseFloat(acpu)
-          }
-          let bcpu = b.cpu
-          if (typeof bcpu == "string") {
-            bcpu = parseFloat(bcpu)
-          }
-          return a + b
-        })
+      if (taggedTargets[i].metrics) {
+        currentCPUValue = taggedTargets[i].metrics.reduce(reduceFunction)
         if (currentCPUValue < minCPUValue) {
-          minCPUTarget = endpointTargets[i]
+          minCPUTarget = taggedTargets[i]
         }
       }
     }
@@ -44,7 +44,7 @@ module.exports = {
       voteSize = config.voteSize
     }
     if (!minCPUTarget) {
-      debug.debug('no target found in %O', endpointTargets)
+      debug.debug('no target found in %O', taggedTargets)
       return
     }
     if (!minCPUTarget.vote) {

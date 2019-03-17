@@ -7,7 +7,8 @@ const debug = {
 
 module.exports = {
   name: 'cpu-min',
-  handler: function(taggedTargets, config, allTargets){
+  type: 'request',
+  handler: function(taggedTargets, config, allTargets, targetRequest){
     debug.debug('processing cpu-min %O', config)
     let minCPUTarget = false
     let minCPUValue = 0

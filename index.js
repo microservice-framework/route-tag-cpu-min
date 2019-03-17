@@ -41,7 +41,7 @@ module.exports = {
       }
     }
     let voteSize = 1
-    if (config.voteSize) {
+    if (config && config.voteSize) {
       voteSize = config.voteSize
     }
     if (!minCPUTarget) {

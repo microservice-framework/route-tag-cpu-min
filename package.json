@@ -1,7 +1,7 @@
 {
   "name": "@microservice-framework/route-tag-cpu-min",
   "version": "1.0.0",
-  "description": "Microservice-router 'cpu-min' tag handler.",
+  "description": "Provide tag 'cpu-min'. Easy to use tag that vote to route traffic to minimum loaded cpu",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
